@@ -42,6 +42,9 @@ Asegúrate de tener instalados los siguientes programas en tu entorno:
    ```
 
 ---
+## Diagrama de Tablas
+
+![Diagrama de Tablas](../docs/diagram.png)
 
 ## 🛠️ Scripts disponibles
 
