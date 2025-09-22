@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { UserRepository } from './user.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import { promises } from 'dns';
@@ -24,13 +25,17 @@ export class UserService {
     async findOne(id: string): Promise<User> {
         const user = await this.userRepository.findOne({ where: { id } });
 
-        if (!user) throw new NotFoundException(`user with ID ${id} not found`);
+        if (!user) throw new NotFoundException(`user with ID: ${id} not found`);
 
         return user;
     }
 
     async findByEmail(email: string): Promise<User | null> {
-        return this.userRepository.findOne({ where: { email } });
+        const user = await this.userRepository.findOne({ where: { email } });
+
+        if (!user) throw new NotFoundException(`user with email:  ${email} not found`);
+
+        return user;
     }
 
     async remove(id: string): Promise<void> {
@@ -39,10 +44,19 @@ export class UserService {
 
     }
 
+    async updateUser(id: string, dto: UpdateUserDto): Promise<User> {
+        const user = await this.userRepository.findOne({ where: { id } });
+        if (!user) throw new NotFoundException(`User with ID: ${id} not found`);
+
+        Object.assign(user, dto);
+        return this.userRepository.save(user);
+    }
+
+
     async updatePassword(id: string, dto: UpdatePasswordDto): Promise<void> {
         const user = await this.userRepository.findOne({ where: { id } });
 
-        if (!user) throw new NotFoundException(`user with ID ${id} not found`);
+        if (!user) throw new NotFoundException(`user with ID: ${id} not found`);
 
         const isPaswordValid = await bcrypt.compare(dto.currentPassword, user.password);
         if (!isPaswordValid) throw new BadRequestException('current password is incorrect');
