@@ -12,6 +12,9 @@ export class UserService {
     constructor(private readonly userRepository: UserRepository) { }
 
     async create(dto: CreateUserDto): Promise<User> {
+        const existingEmail = await this.findByEmail(dto.email);
+        if (existingEmail) throw new NotFoundException(`Email: ${dto.email} already in use`);
+
         const hashedPasword = await bcrypt.hash(dto.password, 10);
         const user = this.userRepository.create({ ...dto, password: hashedPasword });
 
@@ -47,6 +50,9 @@ export class UserService {
     async updateUser(id: string, dto: UpdateUserDto): Promise<User> {
         const user = await this.userRepository.findOne({ where: { id } });
         if (!user) throw new NotFoundException(`User with ID: ${id} not found`);
+
+        const existingEmail = await this.findByEmail(dto.email);
+        if (existingEmail) throw new NotFoundException(`Email: ${dto.email} already in use`);
 
         Object.assign(user, dto);
         return this.userRepository.save(user);
