@@ -5,6 +5,7 @@ import {
   ManyToOne,
   OneToMany,
   CreateDateColumn,
+  Index,
 } from 'typeorm';
 import { User } from '../user/user.entity';
 import { RentalPhoto } from './rental-photo.entity';
@@ -13,42 +14,43 @@ import { Favorite } from '../favorites/favorite.entity';
 @Entity('rentals')
 export class Rental {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @ManyToOne(() => User, (user) => user.rentals, { onDelete: 'CASCADE' })
-  user: User;
+  user!: User;
 
-  @Column()
-  title: string;
+  @Column({ length: 150 })
+  title!: string;
 
-  @Column()
-  address: string;
+  @Column({ length: 200 })
+  address!: string;
 
   @Column('int')
-  rooms: number;
+  rooms!: number;
 
   @Column({ default: false })
-  accessibility: boolean;
+  accessibility!: boolean;
 
+  @Index()
   @Column('decimal', { precision: 10, scale: 2 })
-  price: number;
+  price!: number;
 
-  @Column('decimal', { precision: 10, scale: 2, nullable: true })
-  area: number;
+  @Column('decimal', { precision: 10, scale: 2, default: 0 })
+  area!: number;
 
-  @Column('text', { nullable: true })
-  description: string;
+  @Column('text', { nullable: true, default: '' })
+  description!: string;
 
-  @Column({ type: 'date', nullable: true })
-  availableFrom: Date;
+  @Column({ name: 'available_from', type: 'date', nullable: true })
+  availableFrom!: Date;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt!: Date;
 
   // Relaciones
   @OneToMany(() => RentalPhoto, (photo) => photo.rental, { cascade: true })
-  photos: RentalPhoto[];
+  photos!: RentalPhoto[];
 
   @OneToMany(() => Favorite, (favorite) => favorite.rental)
-  favorites: Favorite[];
+  favorites!: Favorite[];
 }

@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
+import { RentalModule } from './modules/rentals/rental.module';
+import { UserModule } from './modules/user/user.module';
+import { FavoritesModule } from './modules/favorites/favorite.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +29,11 @@ import * as Joi from 'joi';
             : false,
       }),
     }),
+
+    RentalModule,
+    FavoritesModule,
+    UserModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

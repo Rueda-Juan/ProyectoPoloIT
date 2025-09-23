@@ -5,13 +5,13 @@ import { Rental } from '../rentals/rental.entity';
 @Entity('favorites')
 export class Favorite {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @ManyToOne(() => User, (user) => user.favorites, { onDelete: 'CASCADE' })
-  user: User;
+  user!: User;
 
   @ManyToOne(() => Rental, (rental) => rental.favorites, {
     onDelete: 'CASCADE',
   })
-  rental: Rental;
+  rental!: Rental;
 }
