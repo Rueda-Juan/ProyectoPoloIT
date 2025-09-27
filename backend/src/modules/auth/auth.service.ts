@@ -10,12 +10,7 @@ export class AuthService {
   constructor(private readonly userService: UserService) {}
 
   async register(dto: RegisterDto) {
-    const hashedPassword = await bcrypt.hash(dto.password, 10);
-    const user = await this.userService.create({
-      ...dto,
-      password: hashedPassword,
-    });
-
+    const user = await this.userService.create(dto);
     return { message: 'User registered successfully', user };
   }
 
@@ -28,7 +23,7 @@ export class AuthService {
 
     const token = jwt.sign(
       { sub: user.id, role: user.role },
-      process.env.JWT_SECRET || 'UHjd6lnx15jd33YHucDX', //clave jwt
+      process.env.JWT_SECRET || 'default_secret',
       { expiresIn: '1h' },
     );
 
