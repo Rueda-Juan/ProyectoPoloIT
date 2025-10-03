@@ -6,6 +6,7 @@ import { RentalModule } from './modules/rentals/rental.module';
 import { UserModule } from './modules/user/user.module';
 import { FavoritesModule } from './modules/favorites/favorite.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -35,5 +36,6 @@ import { AuthModule } from './modules/auth/auth.module';
     UserModule,
     AuthModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
