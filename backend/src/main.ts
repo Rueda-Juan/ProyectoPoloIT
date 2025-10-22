@@ -1,6 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { setupSwagger } from './config/swagger.config';
+import { ConfigService } from '@nestjs/config'; // <-- CORRECCIÓN: Importación añadida
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
@@ -24,13 +27,17 @@ async function bootstrap() {
     credentials: true,
   });
 
+  setupSwagger(app);
+
   const port = process.env.PORT ?? 3000;
   await app.listen(port);
   logger.log(`🚀 App running on http://localhost:${port}`);
+  logger.log(`📚 Swagger docs available at http://localhost:${port}/api/docs`);
 }
 
 bootstrap().catch((err) => {
-  const logger = new Logger('Bootstrap');
+  // CORRECCIÓN: 'logger' ya no se declara aquí, solo se usa
+  const logger = new Logger('Bootstrap'); 
   logger.error('❌ Failed to start application', err);
-  process.exit(1); // sale con error
+  process.exit(1);
 });
