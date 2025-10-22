@@ -31,7 +31,6 @@ export class Rental {
   @Column({ length: 200 })
   address!: string;
   
-  // --- ¡AÑADE ESTAS DOS PROPIEDADES AQUÍ! ---
 
   @ApiProperty({ example: -34.92136, description: 'Latitud del alquiler' })
   @Column('decimal', { precision: 9, scale: 6 })
@@ -41,7 +40,6 @@ export class Rental {
   @Column('decimal', { precision: 9, scale: 6 })
   lng!: number;
   
-  // ---------------------------------------------
 
   @ApiProperty({ example: 3, description: 'Cantidad de habitaciones' })
   @Column('int')
