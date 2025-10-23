@@ -221,4 +221,4 @@ Consulta el archivo LICENSE para más información.
 
 <br>
 Desarrollado por:
-<div align="center"><strong>Rueda Juan Bautista</strong> y <strong>Damian Fernández</strong> <strong>AlquiMaps</strong> <br>Backend API </div>
+<div align="center"><strong>Rueda Juan Bautista</strong> y <strong>Damian Fernández</strong> <br><h1>AlquiMaps</h1> <br> Backend API </div>
