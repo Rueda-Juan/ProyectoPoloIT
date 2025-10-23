@@ -1,21 +1,22 @@
 import 'reflect-metadata';
-import { DataSource } from 'typeorm';
-import { User } from '../modules/user/user.entity';
-import { Rental } from '../modules/rentals/rental.entity';
-import { Favorite } from '../modules/favorites/favorite.entity';
-import { RentalPhoto } from '../modules/rentals/rental-photo.entity';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-export const AppDataSource = new DataSource({
+export const AppDataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   url: process.env.DATABASE_URL,
-  entities: [User, Rental, Favorite, RentalPhoto],
-  migrations: ['src/migrations/*.ts'],
+  
+  entities: ['dist/**/*.entity.js'],
+  migrations: ['dist/migrations/*.js'],
+
+  
   synchronize: false,
   logging: process.env.NODE_ENV !== 'production',
   ssl: {
     rejectUnauthorized: false,
   },
-});
+};
+
+export const AppDataSource = new DataSource(AppDataSourceOptions);

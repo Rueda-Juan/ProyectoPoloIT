@@ -4,11 +4,11 @@ import { Rental } from './rental.entity';
 @Entity('rental_photos')
 export class RentalPhoto {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @ManyToOne(() => Rental, (rental) => rental.photos, { onDelete: 'CASCADE' })
-  rental: Rental;
+  rental!: Rental;
 
   @Column()
-  url: string;
+  url!: string;
 }
